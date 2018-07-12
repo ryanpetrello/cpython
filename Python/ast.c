@@ -930,6 +930,7 @@ static const char * const FORBIDDEN[] = {
     "None",
     "True",
     "False",
+    "Vrai",
     NULL,
 };
 
@@ -2079,7 +2080,7 @@ ast_for_atom(struct compiling *c, const node *n)
 {
     /* atom: '(' [yield_expr|testlist_comp] ')' | '[' [testlist_comp] ']'
        | '{' [dictmaker|testlist_comp] '}' | NAME | NUMBER | STRING+
-       | '...' | 'None' | 'True' | 'False'
+       | '...' | 'None' | 'True' | 'False' | 'Vrai'
     */
     node *ch = CHILD(n, 0);
 
@@ -2092,6 +2093,8 @@ ast_for_atom(struct compiling *c, const node *n)
             if (!strcmp(s, "None"))
                 return NameConstant(Py_None, LINENO(n), n->n_col_offset, c->c_arena);
             if (!strcmp(s, "True"))
+                return NameConstant(Py_True, LINENO(n), n->n_col_offset, c->c_arena);
+            if (!strcmp(s, "Vrai"))
                 return NameConstant(Py_True, LINENO(n), n->n_col_offset, c->c_arena);
             if (!strcmp(s, "False"))
                 return NameConstant(Py_False, LINENO(n), n->n_col_offset, c->c_arena);
